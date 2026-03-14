@@ -1,13 +1,24 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Ajustes para o login completo
+import { useAuth } from '../contexts/AuthContext';
+
 export default function Login(){
   // O useState é necessário para gerenciar o estado dos campos de login, senha e mensagens de erro, permitindo que a interface do usuário seja atualizada dinamicamente com base nas interações do usuário. Sem o useState, não seria possível armazenar e atualizar essas informações, o que resultaria em uma experiência de usuário estática e limitada.
+  // login será preenchido com o valor do campo de entrada de login da tela, senha será preenchido com o valor do campo de entrada de senha, e erro será preenchido com a mensagem de erro apropriada quando a autenticação falhar. Esses estados são essenciais para fornecer feedback ao usuário e para processar as informações de login corretamente.
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
   // O useNavigate é necessário para redirecionar o usuário após um login bem-sucedido, por exemplo, para a página inicial ou para a página de primeiro acesso. Ele é uma função fornecida pelo React Router que permite navegar programaticamente para diferentes rotas dentro da aplicação. Sem o useNavigate, não seria possível redirecionar o usuário de forma eficiente após o login, o que poderia resultar em uma experiência de usuário confusa e dificultar a navegação dentro da aplicação.
   const nav = useNavigate(); 
+
+  // Aula 03
+  
+  // Ajustes para o login completo
+  // Necessário envolver App na tag </AuthProvider> no arquivo index.js.
+  // A falta deste item causará erro do tipo 
+  const { login: doLogin } = useAuth();
 
   // A função onSubmit é responsável por lidar com o evento de envio do formulário de login, realizando a autenticação do usuário e redirecionando-o para a página apropriada com base no resultado da autenticação. Ela é necessária para processar as informações de login fornecidas pelo usuário, verificar sua validade e determinar se o acesso deve ser concedido ou negado. Sem a função onSubmit, o formulário de login não teria funcionalidade, e os usuários não seriam capazes de autenticar-se ou acessar as áreas protegidas da aplicação.
   async function onSubmit(e){
@@ -18,18 +29,12 @@ export default function Login(){
     e.preventDefault(); 
     setErro('');
     try{
-      // Simulação de autenticação, substitua pela lógica real de autenticação
-      // Neste exemplo, estamos verificando se o login e a senha correspondem a "admin". Se forem válidos, simulamos uma resposta do servidor indicando se é o primeiro acesso ou não. Com base nessa resposta, redirecionamos o usuário para a página de primeiro acesso ou para a página inicial.
-      if(login === 'admin' && senha === 'admin'){
-        // Simulação de resposta do servidor indicando se é o primeiro acesso
-        // Neste exemplo, estamos assumindo que o usuário "admin" tem um campo "primeiroAcesso" que indica se é o primeiro acesso ou não. Com base nesse campo, redirecionamos o usuário para a página de primeiro acesso ou para a página inicial.
-        const u = { primeiroAcesso: true };  
+        // O doLogin é necessário para autenticar o usuário com as credenciais fornecidas, retornando as informações do usuário autenticado, como seu perfil e status de primeiro acesso. Ele é uma função que encapsula a lógica de autenticação, permitindo que a função onSubmit se concentre em lidar com o processo de login e redirecionamento. Sem o doLogin, a função onSubmit teria que lidar diretamente com a lógica de autenticação, o que poderia resultar em um código mais complexo e menos modular.
+        console.log('Login - onSubmit', { login, senha });
+        // funcao resposável por realizar login.
+        const u = await doLogin(login, senha);
         // O nav é usado para redirecionar o usuário para a página de primeiro acesso se for o primeiro acesso, ou para a página inicial caso contrário. Ele é necessário para garantir que os usuários sejam direcionados para a página correta com base em seu status de acesso, proporcionando uma experiência de usuário personalizada e eficiente. Sem o nav, os usuários não seriam redirecionados corretamente, o que poderia resultar em confusão e dificultar a navegação dentro da aplicação. 
         nav(u.primeiroAcesso ? '/first-access' : '/');
-      }
-      else{ 
-        throw new Error('Login ou senha inválidos'); 
-      }
     }catch(err){
        // O setErro é usado para atualizar o estado de erro com a mensagem de erro apropriada quando a autenticação falha, permitindo que a interface do usuário exiba feedback relevante para o usuário. Ele é necessário para informar os usuários sobre problemas de autenticação, como credenciais inválidas, e para melhorar a experiência do usuário ao fornecer informações claras sobre o motivo da falha. Sem o setErro, os usuários não receberiam feedback adequado sobre os erros de autenticação, o que poderia resultar em frustração e dificultar a resolução de problemas.
        setErro(err.message); 

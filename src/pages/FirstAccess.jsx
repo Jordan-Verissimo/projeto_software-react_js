@@ -3,6 +3,8 @@ import { useState } from 'react';
 // O useNavigate é necessário para redirecionar o usuário após definir a senha, por exemplo, para a página inicial ou para a página de login
 // Ele é uma função fornecida pelo React Router que permite navegar programaticamente para diferentes rotas dentro da aplicação
 import { useNavigate } from 'react-router-dom';
+// Aula 04
+import { useAuth } from '../contexts/AuthContext';
  
 // A função onSubmit é responsável por lidar com o evento de envio do formulário de primeiro acesso, realizando a validação das senhas e redirecionando o usuário para a página apropriada com base no resultado da validação. Ela é necessária para processar as informações de senha fornecidas pelo usuário, verificar se as senhas correspondem e determinar se o acesso deve ser concedido ou negado. Sem a função onSubmit, o formulário de primeiro acesso não teria funcionalidade, e os usuários não seriam capazes de definir suas senhas ou acessar as áreas protegidas da aplicação.
 // O return é responsável por renderizar a interface do usuário do componente de primeiro acesso, incluindo os campos de entrada para senha e confirmação de senha, o botão de envio e a exibição de mensagens de erro. Ele é necessário para fornecer uma interface interativa para os usuários definirem suas senhas e receberem feedback sobre o status da validação. Sem o return, o componente não renderizaria nada na tela, tornando impossível para os usuários interagirem com o formulário de primeiro acesso ou receberem informações sobre erros de validação.  
@@ -17,6 +19,9 @@ export default function FirstAccess(){
   // O useNavigate é necessário para redirecionar o usuário após definir a senha, por exemplo, para a página inicial ou para a página de login. Ele é uma função fornecida pelo React Router que permite navegar programaticamente para diferentes rotas dentro da aplicação. Sem o useNavigate, não seria possível redirecionar o usuário de forma eficiente após definir a senha, o que poderia resultar em uma experiência de usuário confusa e dificultar a navegação dentro da aplicação.
   // O nav é usado para redirecionar o usuário para a página de login ou para a página inicial após definir a senha. Ele é necessário para garantir que os usuários sejam direcionados para a página correta com base em suas ações, proporcionando uma experiência de usuário personalizada e eficiente. Sem o nav, os usuários não seriam redirecionados corretamente, o que poderia resultar em confusão e dificultar a navegação dentro da aplicação.
   const nav = useNavigate();
+
+  // Aula 04 - O useAuth é necessário para acessar as funções e informações relacionadas à autenticação do usuário, como a função changePassword, que é usada para atualizar a senha do usuário no servidor. Ele é um hook personalizado que fornece acesso ao contexto de autenticação, permitindo que os componentes acessem e manipulem o estado de autenticação de forma eficiente. Sem o useAuth, não seria possível acessar as funções e informações de autenticação necessárias para implementar a funcionalidade de definição de senha no primeiro acesso.
+  const { changePassword } = useAuth();
  
   // A função onSubmit é responsável por lidar com o evento de envio do formulário de primeiro acesso, realizando a validação das senhas e redirecionando o usuário para a página apropriada com base no resultado da validação. Ela é necessária para processar as informações de senha fornecidas pelo usuário, verificar se as senhas correspondem e determinar se o acesso deve ser concedido ou negado. Sem a função onSubmit, o formulário de primeiro acesso não teria funcionalidade, e os usuários não seriam capazes de definir suas senhas ou acessar as áreas protegidas da aplicação.
   // Neste exemplo, a função onSubmit verifica se a senha e a confirmação de senha correspondem. Se não corresponderem, ela define uma mensagem de erro apropriada usando setErro. Se as senhas corresponderem, ela pode realizar ações adicionais, como salvar a senha no servidor ou redirecionar o usuário para a página de login ou para a página inicial usando nav.
@@ -37,7 +42,10 @@ export default function FirstAccess(){
       setErro('Senhas não conferem. Digitar ambas iguais.'); 
       return; 
     }
-    // Aqui você pode adicionar a lógica para salvar a senha no servidor ou realizar outras ações necessárias antes de redirecionar o usuário para a página de login ou para a página inicial. Neste exemplo, estamos simplesmente redirecionando o usuário para a página inicial usando nav.
+    // Aula 04 - Aqui você pode adicionar a lógica para salvar a senha no servidor ou realizar outras ações necessárias antes de redirecionar o usuário para a página de login ou para a página inicial. Neste exemplo, estamos simplesmente redirecionando o usuário para a página inicial usando nav.
+    await changePassword(senha);
+    alert("senha alterada com sucesso.");
+    console.log("Senha alterada com sucesso.");
     nav('/');
 
   }
