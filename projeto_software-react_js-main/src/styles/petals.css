@@ -1,0 +1,50 @@
+/* Falling Petals Animation */
+.falling-petals {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  top: -50px;
+  color: rgba(196, 162, 78, 0.85);
+  font-size: 1.5rem;
+  animation: fallPetal var(--duration, 10s) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 8px rgba(196, 162, 78, 0.15));
+  text-shadow: 0 0 12px rgba(196, 162, 78, 0.2);
+}
+
+@keyframes fallPetal {
+  0% {
+    transform: translateY(0) translateX(0) rotate(var(--rotation)) scale(0.4) rotateX(0);
+    opacity: 0;
+    filter: blur(1px);
+  }
+  10% {
+    opacity: var(--opacity, 0.4);
+    filter: blur(0);
+  }
+  50% {
+    opacity: var(--opacity, 0.5);
+    transform: translateY(50vh) translateX(var(--drift)) rotate(calc(var(--rotation) + 90deg))
+      scale(0.6) rotateX(10deg);
+  }
+  90% {
+    opacity: var(--opacity, 0.3);
+    transform: translateY(95vh) translateX(calc(var(--drift) * 0.8))
+      rotate(calc(var(--rotation) + 180deg)) scale(0.5) rotateX(20deg);
+  }
+  100% {
+    transform: translateY(110vh) translateX(var(--drift)) rotate(calc(var(--rotation) + 360deg))
+      scale(0.3) rotateX(30deg);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}

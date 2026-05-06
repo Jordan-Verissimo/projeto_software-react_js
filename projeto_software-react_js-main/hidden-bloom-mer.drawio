@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net" agent="5.0">
+  <diagram id="R2lEEwgBhxs31qB6XNt8" name="Hidden Bloom MER">
+    <mxGraphModel dx="7885" dy="1001" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1800" background="ffffff" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1a1a1a;" value="Hidden Bloom - MER (Entity Relationship Diagram)" vertex="1">
+          <mxGeometry height="40" width="1200" x="400" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#666666;" value="L&#39;Oréal Luxe Neuro-Perfumery | 6 Entities | 5 Relationships" vertex="1">
+          <mxGeometry height="20" width="1200" x="400" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="usuario_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=3;shadow=1;" value="" vertex="1">
+          <mxGeometry height="200" width="230" x="300" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="usuario_title" parent="usuario_box" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=white;fillColor=#9673a6;" value="👤 USUARIO" vertex="1">
+          <mxGeometry height="23.80952380952381" width="230" as="geometry" />
+        </mxCell>
+        <mxCell id="usuario_text" parent="usuario_box" style="text;html=1;align=left;verticalAlign=top;fontSize=7;fontColor=#2c3e50;fontFamily=monospace;spacing=3;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;PK id (INT) 🔑&lt;br&gt;login (VARCHAR)&lt;br&gt;nome (VARCHAR)&lt;br&gt;perfil ENUM: ADMIN|PROF|ALUNO&lt;br&gt;senhaHash (VARCHAR) 🔐 bcryptjs&lt;br&gt;primeiroAcesso BOOL&lt;br&gt;bloqueado BOOL&lt;br&gt;dataCriacao TIMESTAMP&lt;br&gt;dataUltimoAcesso TIMESTAMP&lt;br&gt;tentativasLogin INT&lt;/font&gt;" vertex="1">
+          <mxGeometry height="173.80952380952385" width="218.5" y="24.761904761904766" as="geometry" />
+        </mxCell>
+        <mxCell id="biometria_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4e6f1;strokeColor=#3498db;strokeWidth=3;shadow=1;" value="" vertex="1">
+          <mxGeometry height="160" width="290" x="230" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="biometria_title" parent="biometria_box" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=white;fillColor=#3498db;" value="💓 BIOMETRIA" vertex="1">
+          <mxGeometry height="17.391304347826086" width="290" as="geometry" />
+        </mxCell>
+        <mxCell id="biometria_text" parent="biometria_box" style="text;html=1;align=left;verticalAlign=top;fontSize=7;fontColor=#2c3e50;fontFamily=monospace;spacing=3;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;PK id (INT)&lt;br&gt;FK usuarioId (INT) → USUARIO&lt;br&gt;vfc FLOAT [20-120] ⭐&lt;br&gt;bpm INT [45-140] ⭐&lt;br&gt;eda FLOAT [0.05-0.4] ⭐&lt;br&gt;estado ENUM (HIGH_STRESS|ALERT|BALANCED)&lt;br&gt;timestamp TIMESTAMP ⏰&lt;br&gt;FK perfumeId (INT) → PERFUME&lt;/font&gt;" vertex="1">
+          <mxGeometry height="140.8695652173913" width="275.5" y="18.08695652173913" as="geometry" />
+        </mxCell>
+        <mxCell id="sessao_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0e68c;strokeColor=#d4a800;strokeWidth=3;shadow=1;" value="" vertex="1">
+          <mxGeometry height="150" width="210" x="820" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="sessao_title" parent="sessao_box" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=white;fillColor=#d4a800;" value="🔐 SESSAO_JWT" vertex="1">
+          <mxGeometry height="22.05681818181818" width="210" as="geometry" />
+        </mxCell>
+        <mxCell id="sessao_text" parent="sessao_box" style="text;html=1;align=left;verticalAlign=top;fontSize=7;fontColor=#2c3e50;fontFamily=monospace;spacing=3;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;PK id (INT)&lt;br&gt;FK usuarioId (INT) → USUARIO&lt;br&gt;token TEXT 🔑 JWT&lt;br&gt;expiresAt TIMESTAMP [24h]&lt;br&gt;revokedAt TIMESTAMP ⏹️&lt;br&gt;created_at TIMESTAMP ⏰&lt;/font&gt;" vertex="1">
+          <mxGeometry height="92.96590909090908" width="210" y="22.943181818181817" as="geometry" />
+        </mxCell>
+        <mxCell id="perfume_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1bee7;strokeColor=#c2185b;strokeWidth=3;shadow=1;" value="" vertex="1">
+          <mxGeometry height="160" width="170" x="500" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="perfume_title" parent="perfume_box" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=white;fillColor=#c2185b;" value="🌸 PERFUME" vertex="1">
+          <mxGeometry height="23.52941176470588" width="169.99999999999997" as="geometry" />
+        </mxCell>
+        <mxCell id="perfume_text" parent="perfume_box" style="text;html=1;align=left;verticalAlign=top;fontSize=7;fontColor=#2c3e50;fontFamily=monospace;spacing=3;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;PK id (INT)&lt;br&gt;nome VARCHAR&lt;br&gt;origem VARCHAR&lt;br&gt;camadaNota ENUM&lt;br&gt;  TOP|MIDDLE|BASE&lt;br&gt;descricao TEXT&lt;br&gt;created_at TIMESTAMP ⏰&lt;/font&gt;" vertex="1">
+          <mxGeometry height="134.11764705882354" width="161.49999999999997" y="24.47058823529412" as="geometry" />
+        </mxCell>
+        <mxCell id="estado_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#558b2f;strokeWidth=3;shadow=1;" value="" vertex="1">
+          <mxGeometry height="160" width="200" x="70" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="estado_title" parent="estado_box" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=white;fillColor=#558b2f;" value="😊 ESTADO_EMOCIONAL" vertex="1">
+          <mxGeometry height="26.666666666666668" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="estado_text" parent="estado_box" style="text;html=1;align=left;verticalAlign=top;fontSize=7;fontColor=#2c3e50;fontFamily=monospace;spacing=3;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;PK id (INT) 🔑&lt;br&gt;estado ENUM:&lt;br&gt;  HIGH_STRESS (#d32f2f)&lt;br&gt;  ALERT (#f57c00)&lt;br&gt;  BALANCED (#2d6a4f)&lt;br&gt;cor VARCHAR hex&lt;br&gt;dosagem INT [0-100%]&lt;/font&gt;" vertex="1">
+          <mxGeometry height="130.66666666666666" width="190" y="27.733333333333334" as="geometry" />
+        </mxCell>
+        <mxCell id="dispositivo_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffccbc;strokeColor=#d84315;strokeWidth=3;shadow=1;" value="" vertex="1">
+          <mxGeometry height="140" width="200" x="540" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="dispositivo_title" parent="dispositivo_box" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=white;fillColor=#d84315;" value="📱 DISPOSITIVO" vertex="1">
+          <mxGeometry height="23.333333333333332" width="200" as="geometry" />
+        </mxCell>
+        <mxCell id="dispositivo_text" parent="dispositivo_box" style="text;html=1;align=left;verticalAlign=top;fontSize=7;fontColor=#2c3e50;fontFamily=monospace;spacing=3;" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;PK id (INT)&lt;br&gt;FK usuarioId (INT) → USUARIO&lt;br&gt;modelo VARCHAR&lt;br&gt;sistemaOperacional VARCHAR&lt;br&gt;  iOS|Android|watchOS&lt;br&gt;versaoApp VARCHAR&lt;br&gt;ultimaLeitura TIMESTAMP ⏰&lt;/font&gt;" vertex="1">
+          <mxGeometry height="114.33333333333333" width="190" y="24.266666666666666" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_u_b" edge="1" parent="1" source="usuario_box" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#3498db;exitX=0.2;exitY=1;entryX=0.5;entryY=0;" target="biometria_box" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="370" y="300" />
+              <mxPoint x="370" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_u_b_label" connectable="0" parent="rel_u_b" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=8;fontStyle=1;" value="1:N" vertex="1">
+          <mxGeometry relative="1" x="-40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_u_d" edge="1" parent="1" source="usuario_box" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d84315;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="dispositivo_box" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415" y="480" />
+              <mxPoint x="640" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_u_d_label" connectable="0" parent="rel_u_d" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=8;fontStyle=1;" value="1:1" vertex="1">
+          <mxGeometry relative="1" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_u_s" edge="1" parent="1" source="usuario_box" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d4a800;exitX=0.85;exitY=0.5;entryX=0;entryY=0.3;" target="sessao_box" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="530" y="310" />
+              <mxPoint x="620" y="310" />
+              <mxPoint x="620" y="445" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_u_s_label" connectable="0" parent="rel_u_s" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=8;fontStyle=1;" value="1:N" vertex="1">
+          <mxGeometry relative="1" x="20" y="-15" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_b_p" edge="1" parent="1" source="biometria_box" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#c2185b;exitX=0.7;exitY=1;entryX=0.3;entryY=0;" target="perfume_box" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="740" />
+              <mxPoint x="460" y="780" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel_b_p_label" connectable="0" parent="rel_b_p" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=8;fontStyle=1;" value="M:1" vertex="1">
+          <mxGeometry relative="1" x="200" y="-20" as="geometry" />
+        </mxCell>
+        <mxCell id="79cTcI9wKqSlN6UhqmV4-4" edge="1" parent="1" source="estado_text" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;fillColor=#60a917;strokeColor=#2D7600;" target="usuario_text">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

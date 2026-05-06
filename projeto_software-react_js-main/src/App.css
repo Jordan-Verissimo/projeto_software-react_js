@@ -1,0 +1,755 @@
+.app-shell {
+  min-height: 100vh;
+  color: #e8dcc8;
+  background: #060608;
+}
+
+main {
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #060608 0%, #0a0a10 50%, #060608 100%);
+}
+
+main > * {
+  padding: 3rem 1.5rem;
+}
+
+article {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   HERO SECTION - Cinematic Experience
+   ============================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: linear-gradient(135deg, #060608 0%, #0a0a10 50%, #060608 100%);
+  box-shadow: inset 0 -1px 60px rgba(196, 162, 78, 0.05);
+  width: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% -10%,
+    rgba(196, 162, 78, 0.25) 0%,
+    rgba(196, 162, 78, 0.1) 30%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to top, rgba(6, 6, 8, 0.8), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: heroFadeIn 1s ease-out;
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-top-text {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(196, 162, 78, 0.65);
+  margin-bottom: 1.5rem;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero-content h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  margin: 0;
+  color: #f0d888;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  text-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(196, 162, 78, 0.4);
+  line-height: 1;
+}
+
+.hero-divider {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: rgba(196, 162, 78, 0.5);
+  margin: 0.5rem 0;
+  letter-spacing: 0.8em;
+  font-weight: 400;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Page content animations */
+article {
+  animation: slideInUp 600ms ease-out;
+}
+
+/* Smooth transitions for interactive elements */
+button,
+a,
+[role='button'] {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ornamented sections */
+.ornamented-section {
+  border-top: 2px solid rgba(196, 162, 78, 0.2);
+  border-bottom: 2px solid rgba(196, 162, 78, 0.2);
+  padding: 2rem 0;
+  margin: 2rem 0;
+}
+
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  color: #d4c4a0;
+  font-style: italic;
+  font-weight: 400;
+  margin: 0;
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.hero-description {
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(212, 196, 160, 0.75);
+  margin: 1.5rem 0;
+  max-width: 650px;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 2.5rem;
+  background: linear-gradient(135deg, #c4a24e 0%, #a8842f 50%, #c4a24e 100%);
+  color: #0a0a10;
+  padding: 1.1rem 2.8rem;
+  border-radius: 4px;
+  border: 1px solid rgba(196, 162, 78, 0.5);
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  box-shadow:
+    0 15px 40px rgba(196, 162, 78, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 600ms ease;
+}
+
+.cta:hover::before {
+  left: 100%;
+}
+
+.cta:hover {
+  background: linear-gradient(135deg, #d4b860 0%, #b89840 50%, #d4b860 100%);
+  box-shadow:
+    0 25px 60px rgba(196, 162, 78, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+.cta:active {
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   NAVIGATION BAR
+   ============================================ */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  padding: 1.2rem 2rem;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: rgba(10, 10, 16, 0.5);
+  border-top: 1px solid rgba(196, 162, 78, 0.2);
+  border-bottom: 1px solid rgba(196, 162, 78, 0.2);
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+}
+
+.nav a {
+  color: #d4c4a0;
+  text-decoration: none;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 1rem;
+  border-radius: 0;
+  background: transparent;
+  transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-bottom: 2px solid transparent;
+  font-size: 0.85rem;
+  position: relative;
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #c4a24e, #e0c878);
+  transform: translateX(-50%);
+  transition: width 300ms ease;
+}
+
+.nav a:hover::after,
+.nav a.active::after {
+  width: calc(100% - 2rem);
+}
+
+.nav a:hover {
+  color: #f0d888;
+}
+
+.nav a.active {
+  color: #c4a24e;
+  font-weight: 700;
+}
+
+/* ============================================
+   CONTENT AREA
+   ============================================ */
+.content {
+  max-width: 1120px;
+  margin: 3rem auto 2rem;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+/* ============================================
+   PAGE LAYOUTS
+   ============================================ */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  margin-top: auto;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid rgba(196, 162, 78, 0.15);
+  text-align: center;
+  background: rgba(10, 10, 16, 0.5);
+  color: #a09880;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.footer strong {
+  color: #d4c4a0;
+}
+.footer {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  border-top: 1px solid rgba(196, 162, 78, 0.15);
+  color: #a09880;
+  font-size: 0.9rem;
+  background: #060608;
+  font-family: 'Raleway', sans-serif;
+}
+
+.footer strong {
+  color: #d4c4a0;
+  font-weight: 600;
+}
+
+.footer small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(160, 152, 128, 0.7);
+}
+
+/* ============================================
+   UTILITY STYLES
+   ============================================ */
+.page-card,
+.overview-card,
+.module-card,
+.recommendation-card,
+.insights-card {
+  margin-bottom: 2rem;
+  border-radius: 4px;
+  background: rgba(10, 10, 16, 0.9);
+  border: 1px solid rgba(196, 162, 78, 0.15);
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.page-card h2,
+.overview-card h2,
+.module-card h3,
+.recommendation-card h3,
+.insights-card h3,
+.page-card h3,
+.page-card h4 {
+  color: #f0d888;
+  font-family: 'Cinzel', serif;
+  margin-bottom: 1rem;
+}
+
+.page-card p,
+.overview-card p,
+.module-card p,
+.recommendation-card p,
+.insights-card p,
+.page-card li,
+.metric span {
+  color: #e8dcc8;
+  line-height: 1.7;
+}
+
+.product-grid,
+.module-grid,
+.metrics-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metrics-grid {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.metric,
+.product-grid article,
+.module-grid div {
+  background: rgba(10, 10, 16, 0.8);
+  border: 1px solid rgba(196, 162, 78, 0.2);
+  border-radius: 4px;
+  padding: 1.5rem;
+  min-height: 120px;
+  transition: all 300ms ease;
+}
+
+.metric:hover,
+.product-grid article:hover,
+.module-grid div:hover {
+  background: rgba(10, 10, 16, 0.95);
+  border-color: rgba(196, 162, 78, 0.4);
+  box-shadow: 0 8px 24px rgba(196, 162, 78, 0.1);
+}
+
+.metric h3,
+.product-grid h3,
+.module-grid h4 {
+  color: #e0c878;
+  margin-bottom: 0.75rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+}
+
+.metric strong {
+  display: block;
+  font-size: 1.8rem;
+  color: #f0d888;
+  margin: 0.5rem 0;
+  font-weight: 700;
+}
+
+.metric.full {
+  grid-column: 1 / -1;
+}
+
+.module-image,
+.page-card img,
+.news img {
+  width: 100%;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1.5rem;
+  }
+
+  .nav {
+    gap: 0.8rem;
+    padding: 1rem 1rem;
+  }
+
+  .nav a {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .content {
+    padding: 0 1rem;
+    margin: 2rem auto 1.5rem;
+  }
+
+  .footer {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 3rem 1.25rem;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+
+  .hero-description {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .cta {
+    padding: 0.9rem 1.8rem;
+    font-size: 0.75rem;
+  }
+}
+
+.product-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.product-grid article {
+  padding: 1rem;
+}
+
+.product-grid button,
+.primary,
+button.toggle {
+  margin-top: 0.8rem;
+  background: linear-gradient(130deg, #d4af37, #c9a961);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.page-card blockquote {
+  background: rgba(0, 0, 0, 0.28);
+  border-left: 4px solid #d4af37;
+  padding: 0.8rem;
+  margin: 1rem 0;
+  color: #f3e3c7;
+}
+
+.news-list p {
+  margin: 0.3rem 0;
+}
+
+.bar-group {
+  margin-top: 0.8rem;
+}
+
+.bar-group label {
+  color: #f1e2c3;
+  font-size: 0.92rem;
+}
+
+.bar {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d4af37, #a88239);
+}
+
+.hint {
+  color: #d0b88e;
+  margin-top: 0.8rem;
+}
+
+.error {
+  color: #cf4141;
+  font-weight: 700;
+  background: rgba(255, 70, 70, 0.12);
+  border: 1px solid rgba(255, 90, 90, 0.28);
+  border-radius: 6px;
+  padding: 0.6rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: 'Raleway', sans-serif;
+  border: 1px solid #5a8ba8;
+  border-radius: 6px;
+  padding: 0.7rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1f242f;
+}
+
+button:hover,
+.cta:hover {
+  opacity: 0.93;
+}
+/* A classe .container é necessária para estilizar o contêiner principal da página, proporcionando uma aparência agradável e organizada para o conteúdo. 
+Ela define a largura máxima do contêiner, centraliza-o na página, adiciona espaçamento interno, um fundo branco, bordas arredondadas e uma sombra sutil para destacar o conteúdo. 
+Sem a classe .container, o conteúdo da página ficaria desorganizado e sem estilo, dificultando a leitura e a navegação para os usuários. */
+/* Irá centralizar os dados da págin Login.jsx. */
+.container {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(232, 241, 255, 0.95) 0%, rgba(224, 237, 255, 0.95) 100%);
+  border-radius: 12px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #d4af37 50%, transparent 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+.container h2 {
+  color: #d8e4f0;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 1rem;
+}
+/* A classe .grid é necessária para criar um layout de grade flexível e responsivo, permitindo que os elementos dentro do contêiner sejam organizados de forma eficiente e visualmente agradável.
+Ela define o display como grid e adiciona um espaçamento entre os elementos usando a propriedade gap. Sem a classe .grid, os elementos dentro do contêiner ficariam desorganizados e sem um layout estruturado, dificultando a leitura e a navegação para os usuários. A classe .grid é fundamental para criar uma experiência de usuário agradável e organizada, especialmente em páginas com múltipl
+os elementos, como formulários ou listas de itens. */
+/* Organiza os itens da tela de login um abaixo do outro, com um espaçamento entre eles. */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid > * {
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border-left: 4px solid #d4af37;
+  transition: all 0.3s ease;
+}
+
+.grid > *:hover {
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: 'Raleway', sans-serif;
+  border: 1px solid #5a8ba8;
+  border-radius: 6px;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #bcc8d3;
+  transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+  background: #fff;
+}
+
+button {
+  background: linear-gradient(135deg, #4a7a98 0%, #5a8ba8 100%);
+  color: #e8f1ff;
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%);
+  color: #1a1a2e;
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+a {
+  color: #4a7a98;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+a:hover {
+  color: #d4af37;
+  border-bottom-color: #d4af37;
+}
+
+p,
+span,
+label,
+small,
+li {
+  background: rgba(26, 26, 46, 0.4);
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  backdrop-filter: blur(8px);
+  display: inline-block;
+  margin: 0.3rem;
+  border-left: 3px solid #d4af37;
+}
+
+.container p,
+.container span,
+.container label {
+  background: rgba(255, 255, 255, 0.5);
+  border-left: 3px solid #d4af37;
+}
+
+ul,
+ol {
+  background: rgba(26, 26, 46, 0.3);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #d4af37;
+  backdrop-filter: blur(8px);
+  margin: 1rem 0;
+}
+
+.container ul,
+.container ol {
+  background: rgba(255, 255, 255, 0.4);
+}

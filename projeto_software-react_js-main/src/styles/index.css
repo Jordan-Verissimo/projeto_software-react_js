@@ -1,0 +1,9 @@
+@import './base.css';
+@import './fonts.css';
+@import './theme.css';
+@import './components.css';
+@import './layouts.css';
+@import './navbar.css';
+@import './petals.css';
+@import './quiz.css';
+@import './slides.css';

@@ -1,0 +1,670 @@
+openapi: 3.0.0
+info:
+  title: Hidden Bloom Platform API
+  description: |
+    API para plataforma Neuro-Perfumery Hidden Bloom por L'Oréal Luxe
+    - Suporta Web (React 19) e Mobile (React Native)
+    - Autenticação via JWT
+    - Leitura de dados biométricos em tempo real
+  version: 1.0.0
+  contact:
+    name: L'Oréal Luxe Engineering
+    url: https://loreal.com
+  license:
+    name: Proprietário L'Oréal
+
+servers:
+  - url: https://api.hidden-bloom.com/v1
+    description: Produção
+  - url: http://localhost:3000/api
+    description: Desenvolvimento
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Autenticação
+      summary: Login do usuário
+      description: Autentica usuário com login/senha e retorna JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - login
+                - senha
+              properties:
+                login:
+                  type: string
+                  example: admin@loreal.com
+                  minLength: 5
+                senha:
+                  type: string
+                  example: "123456"
+                  minLength: 6
+      responses:
+        '200':
+          description: Login bem-sucedido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: JWT token (validade 24h)
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  user:
+                    $ref: '#/components/schemas/Usuario'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /auth/logout:
+    post:
+      tags:
+        - Autenticação
+      summary: Logout do usuário
+      description: Revoga token JWT atual
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: Logout bem-sucedido
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/refresh-token:
+    post:
+      tags:
+        - Autenticação
+      summary: Renovar token JWT
+      description: Gera novo token com mesmos dados (estende sessão 24h)
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Token renovado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/change-password:
+    post:
+      tags:
+        - Autenticação
+      summary: Alterar senha
+      description: Altera senha do usuário autenticado (requer novo login)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - novaSenha
+              properties:
+                novaSenha:
+                  type: string
+                  minLength: 6
+                  example: NovaS3nh@Forte
+      responses:
+        '200':
+          description: Senha alterada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Senha alterada. Faça login novamente."
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /biometria/leitura:
+    post:
+      tags:
+        - Biometria
+      summary: Registrar nova leitura biométrica
+      description: |
+        Registra medição de VFC, BPM e EDA do usuário
+        - Chamada em tempo real do wearable/sensor
+        - Calcula estado emocional automaticamente
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BiometriaInput'
+      responses:
+        '201':
+          description: Leitura registrada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Biometria'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /biometria/historico:
+    get:
+      tags:
+        - Biometria
+      summary: Obter histórico de leituras
+      description: Lista biometrias do usuário (últimas 24h padrão)
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: horas
+          in: query
+          schema:
+            type: integer
+            default: 24
+          description: Número de horas para retornar
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+          description: Máximo de registros
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Paginação
+      responses:
+        '200':
+          description: Histórico recuperado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 150
+                  registros:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Biometria'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /biometria/atual:
+    get:
+      tags:
+        - Biometria
+      summary: Obter última leitura
+      description: Retorna a medição mais recente do usuário
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Leitura atual
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Biometria'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Sem leituras registradas
+
+  /biometria/estado-emocional:
+    get:
+      tags:
+        - Biometria
+      summary: Obter análise de estado emocional
+      description: Retorna estado emocional atual e recomendações
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Análise de estado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
+                    enum: [HIGH_STRESS, ALERT, BALANCED]
+                    example: BALANCED
+                  descricao:
+                    type: string
+                    example: "Equilibrado para uso ideal"
+                  cor:
+                    type: string
+                    example: "#2d6a4f"
+                  recomendacaoPerfume:
+                    type: string
+                    example: "Jasmin d'Eveil"
+                  dosagem:
+                    type: integer
+                    example: 70
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /usuario/perfil:
+    get:
+      tags:
+        - Usuário
+      summary: Obter dados do usuário
+      description: Retorna perfil completo do usuário autenticado
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Perfil do usuário
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    put:
+      tags:
+        - Usuário
+      summary: Atualizar perfil
+      description: Atualiza informações do usuário (não alterada perfil/login)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: "André Costa"
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: Perfil atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /perfumes/catalogo:
+    get:
+      tags:
+        - Catálogo Perfumes
+      summary: Listar perfumes disponíveis
+      description: Retorna catálogo de perfumes L'Oréal Luxe
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: categoria
+          in: query
+          schema:
+            type: string
+            enum: [TOP, MIDDLE, BASE]
+          description: Filtrar por camada de nota
+        - name: busca
+          in: query
+          schema:
+            type: string
+          description: Buscar por nome/origem
+      responses:
+        '200':
+          description: Lista de perfumes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Perfume'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /perfumes/{id}:
+    get:
+      tags:
+        - Catálogo Perfumes
+      summary: Obter detalhes de um perfume
+      description: Retorna informações completas de um perfume específico
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: perf-001
+      responses:
+        '200':
+          description: Detalhes do perfume
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Perfume'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Perfume não encontrado
+
+  /usuario/favoritos:
+    get:
+      tags:
+        - Usuário
+      summary: Obter perfumes favoritos
+      description: Lista perfumes marcados como favoritos
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Perfumes favoritos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Perfume'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Usuário
+      summary: Adicionar perfume aos favoritos
+      description: Marca um perfume como favorito
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - perfumeId
+              properties:
+                perfumeId:
+                  type: string
+                  example: perf-001
+      responses:
+        '201':
+          description: Adicionado aos favoritos
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Perfume não encontrado
+
+  /usuario/favoritos/{perfumeId}:
+    delete:
+      tags:
+        - Usuário
+      summary: Remover perfume dos favoritos
+      description: Remove marca de favorito de um perfume
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: perfumeId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: perf-001
+      responses:
+        '204':
+          description: Removido dos favoritos
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /admin/usuarios:
+    get:
+      tags:
+        - Admin
+      summary: Listar todos os usuários
+      description: Apenas ADMIN pode acessar
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: perfil
+          in: query
+          schema:
+            type: string
+            enum: [ADMIN, PROFESSOR, ALUNO]
+        - name: bloqueado
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usuario'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /admin/usuarios/{id}/desbloquear:
+    post:
+      tags:
+        - Admin
+      summary: Desbloquear usuário
+      description: Remove bloqueio de login por tentativas falhadas
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "2"
+      responses:
+        '200':
+          description: Usuário desbloqueado
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: Usuário não encontrado
+
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "1"
+        login:
+          type: string
+          example: admin@loreal.com
+        nome:
+          type: string
+          example: "Administrator"
+        perfil:
+          type: string
+          enum: [ADMIN, PROFESSOR, ALUNO]
+          example: ADMIN
+        primeiroAcesso:
+          type: boolean
+          example: false
+        bloqueado:
+          type: boolean
+          example: false
+        dataCriacao:
+          type: string
+          format: date-time
+          example: "2026-04-01T10:00:00Z"
+        dataUltimoAcesso:
+          type: string
+          format: date-time
+          example: "2026-04-09T15:30:00Z"
+
+    BiometriaInput:
+      type: object
+      required:
+        - vfc
+        - bpm
+        - eda
+      properties:
+        vfc:
+          type: number
+          minimum: 20
+          maximum: 120
+          description: Variabilidade Frequência Cardíaca
+          example: 58
+        bpm:
+          type: integer
+          minimum: 45
+          maximum: 140
+          description: Batimentos Por Minuto
+          example: 74
+        eda:
+          type: number
+          minimum: 0.05
+          maximum: 0.4
+          description: Atividade Elétrica Derme (Galvanic Skin Response)
+          example: 0.15
+
+    Biometria:
+      allOf:
+        - $ref: '#/components/schemas/BiometriaInput'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: bio-12345
+            usuarioId:
+              type: string
+              example: "1"
+            estado:
+              type: string
+              enum: [HIGH_STRESS, ALERT, BALANCED]
+              example: BALANCED
+            timestamp:
+              type: string
+              format: date-time
+              example: "2026-04-09T15:30:00Z"
+
+    Perfume:
+      type: object
+      properties:
+        id:
+          type: string
+          example: perf-001
+        nome:
+          type: string
+          example: "Equilibre Zen"
+        origem:
+          type: string
+          example: "L'Oréal Luxe - Coleção Matcha"
+        camadaNota:
+          type: string
+          enum: [TOP, MIDDLE, BASE]
+          example: MIDDLE
+        descricao:
+          type: string
+          example: "Amadeirado Terroso com Matcha & Sandalo"
+        ingredientes:
+          type: array
+          items:
+            type: string
+          example: ["Matcha", "Sandalo", "Amadeira Suave"]
+
+  responses:
+    Unauthorized:
+      description: Token JWT inválido ou expirado
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              erro:
+                type: string
+                example: "Token inválido"
+
+    Forbidden:
+      description: Sem permissão para acessar recurso
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              erro:
+                type: string
+                example: "Acesso restrito a ADMIN"
+
+    BadRequest:
+      description: Requisição inválida
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              erro:
+                type: string
+                example: "VFC fora do range permitido"
+
+    TooManyRequests:
+      description: Muitas tentativas de login falhadas
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              erro:
+                type: string
+                example: "Usuário bloqueado por 30 minutos"
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Usar token JWT obtido no endpoint `/auth/login`
+        Header: Authorization: Bearer <token>
+
+tags:
+  - name: Autenticação
+    description: Endpoints para login, logout e gerenciamento de sessão
+  - name: Biometria
+    description: Endpoints para leitura e análise de dados biométricos
+  - name: Usuário
+    description: Endpoints para gerenciar perfil de usuário
+  - name: Catálogo Perfumes
+    description: Endpoints para catálogo de perfumes L'Oréal
+  - name: Admin
+    description: Endpoints administrativos (requer perfil ADMIN)
