@@ -12,10 +12,7 @@ export default function FallingPetals() {
         id: id++,
         x: Math.random() * 100,
         size: 6 + Math.random() * 10,
-        duration: 8 + Math.random() * 10,
-        rotation: Math.random() * 360,
         opacity: 0.15 + Math.random() * 0.25,
-        drift: -30 + Math.random() * 60,
       };
 
       setPetals((prev) => [...prev.slice(-18), petal]);
@@ -40,9 +37,6 @@ export default function FallingPetals() {
             left: `${p.x}%`,
             fontSize: `${p.size}px`,
             opacity: p.opacity,
-            '--duration': `${p.duration}s`,
-            '--drift': `${p.drift / 2}vw`,
-            '--rotation': `${p.rotation}deg`,
           }}
         >
           ✦
