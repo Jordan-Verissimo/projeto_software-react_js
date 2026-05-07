@@ -8,6 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: projeto_software-react_js-main
+
     steps:
     - uses: actions/checkout@v4
 
@@ -15,12 +19,5 @@ jobs:
       with:
         node-version: 20
 
-    - name: Install dependencies
-      run: |
-        cd hidden-bloom
-        npm install
-
-    - name: Build project
-      run: |
-        cd hidden-bloom
-        npm run build
+    - run: npm install
+    - run: npm run build
