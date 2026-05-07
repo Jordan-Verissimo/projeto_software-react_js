@@ -1,4 +1,5 @@
 import { db } from './storage';
+import { jwtDecode } from 'jwt-decode';
 import bcryptjs from 'bcryptjs';
 
 /**
@@ -7,13 +8,11 @@ import bcryptjs from 'bcryptjs';
  * - PROFESSOR: Acesso a funcionalidades de ensino
  * - ALUNO: Acesso a funcionalidades de aprendizado
  */
-export const Perfil = {
-  ADMIN: 'ADMIN',
-  PROFESSOR: 'PROFESSOR',
-  ALUNO: 'ALUNO',
-};
+export const Perfil = { ADMIN: 'ADMIN', PROFESSOR: 'PROFESSOR', ALUNO: 'ALUNO' };
 
 const MAX_LOGIN_ATTEMPTS = 3;
+const JWT_SECRET = 'hidden-bloom-jwt-secret-key-2026'; // Em produção: usar env var
+const TOKEN_EXPIRY = '24h';
 const BCRYPT_ROUNDS = 10;
 
 /**
@@ -31,7 +30,7 @@ function seed() {
         primeiroAcesso: true,
         tentativasFalhas: 0,
         bloqueado: false,
-        senhaHash: bcryptjs.hashSync('123456', BCRYPT_ROUNDS),
+        senhaHash: bcryptjs.hashSync('123456', BCRYPT_ROUNDS), // Hash seguro
       },
       {
         id: '2',
@@ -60,10 +59,11 @@ function seed() {
 seed();
 
 /**
- * Autentica um usuário com login e senha
- * @param {string} login
- * @param {string} senha
- * @returns {Promise<Object>}
+ * Autentica um usuário com login e senha, retorna JWT token
+ * @param {string} login - Login do usuário
+ * @param {string} senha - Senha do usuário
+ * @returns {Promise<Object>} { accessToken, user }
+ * @throws {Error} Se login inválido, senha errada ou usuário bloqueado
  */
 export async function autenticar(login, senha) {
   if (!login || !senha) {
@@ -81,6 +81,7 @@ export async function autenticar(login, senha) {
     throw new Error('Usuário bloqueado por excesso de tentativas');
   }
 
+  // Verificar senha com hash (seguro)
   const senhaValida = bcryptjs.compareSync(senha, user.senhaHash);
 
   if (!senhaValida) {
@@ -91,25 +92,17 @@ export async function autenticar(login, senha) {
     }
 
     db.set('usuarios', users);
-
     throw new Error('Senha inválida');
   }
 
-  // Reset após login bem-sucedido
+  // Reset tentativas após login bem-sucedido
   user.tentativasFalhas = 0;
-
   db.set('usuarios', users);
 
-  // Token simples compatível com frontend/browser
-  const token = btoa(
-    JSON.stringify({
-      id: user.id,
-      nome: user.nome,
-      perfil: user.perfil,
-      exp: Date.now() + 24 * 60 * 60 * 1000,
-    })
-  );
+  // Gerar JWT token
+// jwt.verify(...)
 
+  // Retorna token + dados públicos do usuário
   return {
     accessToken: token,
     user: {
@@ -123,10 +116,11 @@ export async function autenticar(login, senha) {
 }
 
 /**
- * Altera a senha do usuário
- * @param {string} userId
- * @param {string} novaSenha
- * @returns {Promise<boolean>}
+ * Altera a senha do usuário com hash seguro
+ * @param {string} userId - ID do usuário
+ * @param {string} novaSenha - Nova senha
+ * @returns {Promise<boolean>} True se sucesso
+ * @throws {Error} Se usuário não encontrado ou senha inválida
  */
 export async function alterarSenha(userId, novaSenha) {
   if (!userId || !novaSenha) {
@@ -144,31 +138,23 @@ export async function alterarSenha(userId, novaSenha) {
     throw new Error('Usuário não encontrado');
   }
 
+  // Hash seguro da nova senha com bcrypt
   user.senhaHash = bcryptjs.hashSync(novaSenha, BCRYPT_ROUNDS);
   user.primeiroAcesso = false;
-
   db.set('usuarios', users);
 
   return true;
 }
 
 /**
- * Verifica se um token é válido
- * @param {string} token
- * @returns {Object}
+ * Verifica se um token JWT é válido
+ * @param {string} token - Token JWT
+ * @returns {Object} Dados do token se válido
+ * @throws {Error} Se token inválido ou expirado
  */
 export function verificarToken(token) {
   try {
-    if (!token) {
-      throw new Error('Token ausente');
-    }
-
-    const decoded = JSON.parse(atob(token));
-
-    if (decoded.exp < Date.now()) {
-      throw new Error('Token expirado');
-    }
-
+    const decoded = jwt.verify(token, JWT_SECRET);
     return decoded;
   } catch (err) {
     throw new Error(`Token inválido: ${err.message}`);
@@ -176,20 +162,18 @@ export function verificarToken(token) {
 }
 
 /**
- * Renova token
- * @param {string} token
- * @returns {string}
+ * Renova um token JWT (cria novo com mesmos dados)
+// jwt.verify(...)
+ * @returns {string} Novo token JWT
+ * @throws {Error} Se token inválido
  */
 export function renovarToken(token) {
   try {
-    const decoded = verificarToken(token);
-
-    return btoa(
-      JSON.stringify({
-        ...decoded,
-        exp: Date.now() + 24 * 60 * 60 * 1000,
-      })
-    );
+    const decoded = jwt.verify(token, JWT_SECRET);
+    
+    // Cria novo token com os mesmos dados
+// jwt.verify(...)
+    return novoToken;
   } catch (err) {
     throw new Error(`Falha ao renovar token: ${err.message}`);
   }

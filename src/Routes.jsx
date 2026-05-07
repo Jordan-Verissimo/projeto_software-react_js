@@ -11,6 +11,7 @@ import Hardware from './pages/Hardware';
 import Faculties from './pages/admin/Faculties';
 import Quiz from './pages/Quiz';
 import Slides from './pages/Slides';
+import NotFound from './pages/NotFound';
 
 export const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
       { path: 'device', element: <Device /> },
       { path: 'slides', element: <Slides /> },
       { path: 'admin/faculties', element: <Faculties /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ]);

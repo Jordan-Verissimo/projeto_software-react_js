@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import NavBar from './app/components/NavBar';
-import FallingPetals from './app/components/FallingPetals';
+import { NavBar } from './app/components/NavBar';
+import { FallingPetals } from './app/components/FallingPetals';
 import './App.css';
 
 function App() {
