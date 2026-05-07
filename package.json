@@ -2,6 +2,7 @@
   "name": "projeto_software-react_js",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jordan-verissimo.github.io/projeto_software-react_js",
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
