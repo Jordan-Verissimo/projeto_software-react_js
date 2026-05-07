@@ -100,16 +100,7 @@ export async function autenticar(login, senha) {
   db.set('usuarios', users);
 
   // Gerar JWT token
-  const token = jwt.sign(
-    {
-      id: user.id,
-      login: user.login,
-      perfil: user.perfil,
-      nome: user.nome,
-    },
-    JWT_SECRET,
-    { expiresIn: TOKEN_EXPIRY }
-  );
+// jwt.verify(...)
 
   // Retorna token + dados públicos do usuário
   return {
@@ -172,7 +163,7 @@ export function verificarToken(token) {
 
 /**
  * Renova um token JWT (cria novo com mesmos dados)
- * @param {string} token - Token JWT antigo
+// jwt.verify(...)
  * @returns {string} Novo token JWT
  * @throws {Error} Se token inválido
  */
@@ -181,18 +172,8 @@ export function renovarToken(token) {
     const decoded = jwt.verify(token, JWT_SECRET);
     
     // Cria novo token com os mesmos dados
-    const novoToken = jwt.sign(
-      {
-        id: decoded.id,
-        login: decoded.login,
-        perfil: decoded.perfil,
-        nome: decoded.nome,
-      },
-      JWT_SECRET,
-      { expiresIn: TOKEN_EXPIRY }
-    );
-
-    return novoToken;
+// jwt.verify(...)
+// jwt.verify(...)
   } catch (err) {
     throw new Error(`Falha ao renovar token: ${err.message}`);
   }

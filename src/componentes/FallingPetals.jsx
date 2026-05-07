@@ -6,6 +6,7 @@ export default function FallingPetals() {
 
   useEffect(() => {
     let id = 0;
+
     const spawnPetal = () => {
       const petal = {
         id: id++,
@@ -16,15 +17,16 @@ export default function FallingPetals() {
         opacity: 0.15 + Math.random() * 0.25,
         drift: -30 + Math.random() * 60,
       };
+
       setPetals((prev) => [...prev.slice(-18), petal]);
     };
 
-    // Initial burst
     for (let i = 0; i < 6; i++) {
       setTimeout(spawnPetal, i * 600);
     }
 
-    const interval = setInterval(spawnPetal, 1800 + Math.random() * 1200);
+    const interval = setInterval(spawnPetal, 1800);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -36,11 +38,8 @@ export default function FallingPetals() {
           className="petal"
           style={{
             left: `${p.x}%`,
-            fontSize: p.size,
+            fontSize: `${p.size}px`,
             opacity: p.opacity,
-            '--duration': `${p.duration}s`,
-            '--drift': `${p.drift / 2}vw`,
-            '--rotation': `${p.rotation}deg`,
           }}
         >
           ✦
