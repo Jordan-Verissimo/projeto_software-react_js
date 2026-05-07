@@ -1,5 +1,5 @@
 import { db } from './storage';
-import jwt from 'jsonwebtoken';
+import { jwtDecode } from 'jwt-decode';
 import bcryptjs from 'bcryptjs';
 
 /**
