@@ -1,4 +1,34 @@
-# Getting Started with Create React App
+# Hidden Bloom Platform 🌸 - L'Oréal Luxe
+
+## 📚 Documentação Completa
+
+### 🔐 Segurança & Arquitetura
+- [SECURITY.md](./SECURITY.md) - Análise de segurança com JWT, bcryptjs e rate limiting
+- [src/services/api.js](./src/services/api.js) - Implementação JWT com autenticação
+
+### 📊 Modelagem de Dados
+- [DATA_MODEL.md](./DATA_MODEL.md) - Diagrama ER, entidades, relacionamentos e SQL
+- [MER_ANALISE.md](./MER_ANALISE.md) - Análise detalhada do MER com fluxos de dados ⭐ NOVO
+- [hidden-bloom-mer.drawio](./hidden-bloom-mer.drawio) - Diagrama visual (abrir em draw.io) ⭐ NOVO
+- [DRAWIO_GUIDE.md](./DRAWIO_GUIDE.md) - Guia prático de uso draw.io ⭐ NOVO
+- [BUSINESS_REQUIREMENTS_ALIGNMENT.md](./BUSINESS_REQUIREMENTS_ALIGNMENT.md) - Alinhamento com requisitos L'Oréal ⭐ NOVO
+
+### 🌐 Documentação de APIs
+- [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) - Guia completo de endpoints
+- [openapi.yaml](./openapi.yaml) - Especificação OpenAPI 3.0 (Swagger)
+- **Visualizar interativamente**: https://editor.swagger.io/ (importar openapi.yaml)
+
+### 📝 Testes & Qualidade
+- `npm test` - 56 testes passando (22 JWT-específicos)
+- `npm run test:coverage` - Cobertura de testes
+- [TEST_REPORT.md](./TEST_REPORT.md) - Relatório de testes
+
+### 🗂️ Índice Completo
+- [DOCUMENTATION_INDEX.md](./DOCUMENTATION_INDEX.md) - Índice central com todas as documentações
+
+---
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
