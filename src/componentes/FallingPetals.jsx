@@ -40,9 +40,9 @@ export default function FallingPetals() {
             left: `${p.x}%`,
             fontSize: `${p.size}px`,
             opacity: p.opacity,
-            ["--duration"]: `${p.duration}s`,
-            ["--drift"]: `${p.drift / 2}vw`,
-            ["--rotation"]: `${p.rotation}deg`,
+            '--duration': `${p.duration}s`,
+            '--drift': `${p.drift / 2}vw`,
+            '--rotation': `${p.rotation}deg`,
           }}
         >
           ✦
