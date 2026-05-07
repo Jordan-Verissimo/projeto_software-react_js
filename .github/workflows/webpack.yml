@@ -15,5 +15,12 @@ jobs:
       with:
         node-version: 20
 
-    - run: npm install
-    - run: npm run build
+    - name: Install dependencies
+      run: |
+        cd hidden-bloom
+        npm install
+
+    - name: Build project
+      run: |
+        cd hidden-bloom
+        npm run build
