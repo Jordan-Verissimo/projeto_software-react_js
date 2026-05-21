@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { GoldButton } from '../app/components/GoldButton';
-import { OrnateFrame } from '../app/components/OrnateFrame';
+import { GoldButton } from '../componentes/GoldButton';
+import { OrnateFrame } from '../componentes/OrnateFrame';
 import { Bluetooth, BluetoothOff, ToggleLeft, ToggleRight, Info, Radio } from 'lucide-react';
 
 export default function Device() {

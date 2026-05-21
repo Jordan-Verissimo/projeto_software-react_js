@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { OrnateFrame } from '../app/components/OrnateFrame';
-import { GoldButton } from '../app/components/GoldButton';
+import { OrnateFrame } from '../componentes/OrnateFrame';
+import { GoldButton } from '../componentes/GoldButton';
+import { ImageWithFallback } from '../componentes/ImageWithFallback';
 import '../styles/quiz.css';
 
 const FRAGMENTS = [
@@ -304,16 +305,16 @@ export default function Quiz() {
         <div style={{ maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
           <OrnateFrame glow>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-              <div
+              <ImageWithFallback
+                src={`/assets/images/vials/${resultFragrance.image}`}
+                alt={resultFragrance.fragrance}
                 style={{
-                  background: resultFragrance.color,
-                  width: '80px',
-                  height: '80px',
-                  borderRadius: '50%',
+                  width: '120px',
+                  height: '200px',
+                  objectFit: 'contain',
                   marginLeft: 'auto',
                   marginRight: 'auto',
                   marginBottom: '1rem',
-                  opacity: 0.2,
                 }}
               />
               <h1

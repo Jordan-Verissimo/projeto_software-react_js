@@ -1,5 +1,5 @@
 import React from 'react';
-import { OrnateFrame, OrnateDivider } from '../app/components/OrnateFrame';
+import { OrnateFrame, OrnateDivider } from '../componentes/OrnateFrame';
 import { Store, Sparkles, ShieldCheck, TrendingUp } from 'lucide-react';
 
 const brands = [

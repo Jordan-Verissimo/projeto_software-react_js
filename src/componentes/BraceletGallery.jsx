@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ImageWithFallback } from './ImageWithFallback';
 
 const bracelets = [
   {
@@ -7,21 +8,21 @@ const bracelets = [
     name: 'Edition Rutênio',
     desc: 'Aço 316L com banho de rutênio escuro. Estilo discreto e contemporâneo.',
     color: '#8B8B8B',
-    imgPlaceholder: '⌚',
+    image: 'ruthenium-bracelet.jpg',
   },
   {
     id: 2,
     name: 'Edition Bleu Nuit',
     desc: 'Aço 316L com esmalte Grand Feu azul profundo. Elegância noturna.',
     color: '#1a3a52',
-    imgPlaceholder: '⌚',
+    image: 'blue-bracelet.jpg',
   },
   {
     id: 3,
     name: 'Edition Or Rose',
     desc: 'Aço 316L com banho de ouro rose. Refinamento clássico Belle Époque.',
     color: '#B76E79',
-    imgPlaceholder: '⌚',
+    image: 'rose-gold-bracelet.jpg',
   },
 ];
 
@@ -59,12 +60,19 @@ export default function BraceletGallery() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '5rem',
-            color: 'rgba(255, 255, 255, 0.2)',
             animation: 'fadeInScale 600ms ease-out',
           }}
         >
-          {bracelet.imgPlaceholder}
+          <ImageWithFallback
+            src={`/assets/images/bracelets/${bracelet.image}`}
+            alt={bracelet.name}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              padding: '2rem',
+            }}
+          />
         </div>
 
         {/* Navigation Buttons */}

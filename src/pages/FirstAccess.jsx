@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { OrnateFrame, OrnateAccent } from '../app/components/OrnateFrame';
-import { GoldButton } from '../app/components/GoldButton';
+import { OrnateFrame, OrnateAccent } from '../componentes/OrnateFrame';
+import { GoldButton } from '../componentes/GoldButton';
 import { KeyRound, ShieldCheck } from 'lucide-react';
 
 export default function FirstAccess() {

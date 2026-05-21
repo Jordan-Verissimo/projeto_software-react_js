@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { OrnateFrame } from '../app/components/OrnateFrame';
-import { GoldButton } from '../app/components/GoldButton';
+import { OrnateFrame } from '../componentes/OrnateFrame';
+import { GoldButton } from '../componentes/GoldButton';
 
 export default function NotFound() {
   const navigate = useNavigate();

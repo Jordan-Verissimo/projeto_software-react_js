@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { GoldButton } from '../app/components/GoldButton';
-import { OrnateFrame, OrnateAccent } from '../app/components/OrnateFrame';
+import { GoldButton } from '../componentes/GoldButton';
+import { OrnateFrame, OrnateAccent } from '../componentes/OrnateFrame';
 import { LogIn, KeyRound, Mail } from 'lucide-react';
 
 export default function Login() {

@@ -41,9 +41,11 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "crypto-browserify": "^3.12.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.38.0",
     "input-otp": "^1.4.2",
+    "jsonwebtoken": "^9.0.3",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^1.7.0",
     "prop-types": "^15.8.1",
@@ -54,7 +56,9 @@
     "react-scripts": "^5.0.1",
     "recharts": "^3.8.1",
     "sonner": "^2.0.7",
+    "stream-browserify": "^3.0.0",
     "tailwind-merge": "^3.5.0",
+    "util": "^0.12.5",
     "vaul": "^1.1.2",
     "web-vitals": "^2.1.4",
     "zod": "^4.3.6"
@@ -118,8 +122,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.27",
+    "buffer": "^6.0.3",
     "postcss": "^8.5.9",
     "prettier": "^3.8.1",
+    "react-app-rewired": "^2.2.1",
     "tailwindcss": "^4.2.2"
   }
 }

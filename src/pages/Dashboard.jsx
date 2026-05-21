@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { Activity, Heart, Zap } from 'lucide-react';
-import { OrnateFrame, OrnateDivider } from '../app/components/OrnateFrame';
-import { GoldButton } from '../app/components/GoldButton';
+import { OrnateFrame, OrnateDivider } from '../componentes/OrnateFrame';
+import { GoldButton } from '../componentes/GoldButton';
 import {
   AreaChart,
   Area,
