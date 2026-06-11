@@ -6,6 +6,7 @@ module.exports = function override(config, env) {
     buffer: require.resolve('buffer/'),
     util: require.resolve('util/'),
     stream: require.resolve('stream-browserify'),
+    vm: require.resolve('vm-browserify'),
   };
 
   return config;
