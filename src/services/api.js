@@ -1,4 +1,4 @@
-﻿import { db } from './storage';
+import { db } from './storage';
 import bcryptjs from 'bcryptjs';
 
 export const Perfil = { ADMIN: 'ADMIN', PROFESSOR: 'PROFESSOR', ALUNO: 'ALUNO' };

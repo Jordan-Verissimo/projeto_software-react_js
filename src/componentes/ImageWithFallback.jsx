@@ -18,7 +18,7 @@ export function ImageWithFallback(props) {
       style={style}
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
-        <img src={ERROR_IMG_SRC} alt="Error loading image" {...rest} data-original-url={src} />
+        <img src={ERROR_IMG_SRC} alt="" {...rest} data-original-url={src} />
       </div>
     </div>
   ) : (
